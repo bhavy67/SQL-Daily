@@ -114,3 +114,8 @@ ORDER BY avg_salary DESC;
    - GROUP BY defines grouping
    - AVG returns decimal
 */
+
+/* 
+   COUNT(*) = number of rows
+   COUNT(column) = number of non-NULL values
+*/
