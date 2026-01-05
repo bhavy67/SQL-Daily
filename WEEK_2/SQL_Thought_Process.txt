@@ -1,0 +1,204 @@
+============================================================
+            SQL THOUGHT PROCESS (GENERALIZED)
+                  ONE-PAGE CHECKLIST
+============================================================
+
+STEP 1: UNDERSTAND THE ASK (DO NOT WRITE SQL YET)
+------------------------------------------------
+Ask yourself:
+- What ROWS are required?
+- What COLUMNS are required?
+- Is the result PER something? (user / product / day / city)
+
+RULE:
+If you hear "per X"
+    --> GROUP BY X is REQUIRED
+
+
+STEP 2: CHOOSE THE BASE TABLE (MOST IMPORTANT)
+------------------------------------------------
+Ask:
+"Which table defines ALL the rows I care about?"
+
+RULES:
+Main entity      --> FROM
+Extra info       --> JOIN
+
+Examples:
+Visits   --> base table
+Sales    --> base table
+Orders   --> base table
+
+
+STEP 3: DECIDE JOIN TYPE (NEVER GUESS)
+------------------------------------------------
+LOGIC TABLE:
+
+Keep ALL base rows?
+    --> LEFT JOIN
+
+Only matching rows needed?
+    --> INNER JOIN
+
+Find rows with NO match?
+    --> LEFT JOIN
+        + WHERE right_table.column IS NULL
+
+
+STEP 4: ATTACH TABLES CORRECTLY
+------------------------------------------------
+RULE:
+Relationship logic  --> ON
+Filtering logic     --> WHERE
+
+CORRECT:
+JOIN tableB
+ON tableA.id = tableB.id
+
+WHERE tableA.status = 'active'
+
+
+STEP 5: FILTER UNWANTED ROWS
+------------------------------------------------
+Ask:
+- What should be excluded?
+- What must be true?
+
+TOOLS:
+WHERE
+IS NULL / IS NOT NULL
+=  !=  >  <  IN  BETWEEN
+
+
+STEP 6: CHECK THE GRAIN (CRITICAL STEP)
+------------------------------------------------
+Ask:
+"What does ONE ROW represent right now?"
+
+If:
+- Multiple rows exist per entity
+- Question asks how many / total / average
+
+THEN:
+--> AGGREGATION IS REQUIRED
+
+
+STEP 7: AGGREGATE CORRECTLY
+------------------------------------------------
+RULES:
+COUNT rows        --> COUNT(*)
+COUNT values      --> COUNT(column)
+Total             --> SUM(column)
+Average           --> AVG(column)
+
+IMPORTANT:
+If aggregation is used,
+EVERY non-aggregated column
+MUST appear in GROUP BY
+
+
+STEP 8: GROUP BY ONLY WHEN NEEDED
+------------------------------------------------
+RULE:
+Result is PER X?
+    --> GROUP BY X
+
+No "per" mentioned?
+    --> NO GROUP BY
+
+
+STEP 9: SELECT ONLY WHAT IS ASKED
+------------------------------------------------
+FINAL OUTPUT:
+- No extra columns
+- Only requested fields
+- Use aliases if required
+
+
+STEP 10: SORT ONLY IF ASKED
+------------------------------------------------
+Order required?
+    --> ORDER BY column
+
+Not mentioned?
+    --> DO NOT SORT
+
+
+============================================================
+            SQL EXECUTION FLOW (MEMORIZE)
+============================================================
+
+FROM
+  |
+JOIN
+  |
+WHERE
+  |
+GROUP BY
+  |
+HAVING
+  |
+SELECT
+  |
+ORDER BY
+
+
+============================================================
+            ONE-SCREEN SQL MENTAL FLOW
+============================================================
+
+What do they want?
+        |
+        v
+Which table gives ALL rows?
+        |
+        v
+Do I need other tables?
+        |
+        v
+Should unmatched rows stay?
+        |
+        v
+What rows must be filtered?
+        |
+        v
+Am I counting / summing / averaging?
+        |
+        v
+Is result PER something?
+        |
+        v
+SELECT final columns
+
+
+============================================================
+                GOLDEN RULES
+============================================================
+
+FROM       --> defines the universe
+JOIN       --> connects data
+WHERE      --> filters rows
+GROUP BY   --> defines "per whom"
+HAVING     --> filters groups
+SELECT     --> formats output
+
+
+============================================================
+            COMMON MISTAKES TO AVOID
+============================================================
+
+X Writing SELECT first
+X Guessing JOIN types
+X Aggregating without GROUP BY
+X Filtering JOIN conditions in WHERE
+X Using GROUP BY unnecessarily
+
+
+============================================================
+            INTERVIEW ONE-LINER
+============================================================
+
+"I identify the base table, decide joins logically,
+filter rows, aggregate if needed,
+and finally select only what is asked."
+============================================================
